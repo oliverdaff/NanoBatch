@@ -25,7 +25,7 @@
 //!
 //!struct TestBatchProcessorError(String);
 //!
-//!impl nano::BatchProcessor<i32, i32, TestBatchProcessorError> for TestBatchProcessor {
+//!impl nanobatch::BatchProcessor<i32, i32, TestBatchProcessorError> for TestBatchProcessor {
 //!    fn process_batch(&self, batch: Vec<i32>) -> Result<Vec<i32>, TestBatchProcessorError> {
 //!        Ok(batch.iter().map(|x| x + 2).collect::<Vec<_>>())
 //!    }
@@ -33,7 +33,7 @@
 //! #[tokio::main]
 //! async fn main() {
 //!     let processor = Arc::new(Mutex::new(TestBatchProcessor));
-//!     let batcher = nano::NanoBatcher::new(10, 32, time::Duration::from_millis(10), processor);
+//!     let batcher = nanobatch::NanoBatcher::new(10, 32, time::Duration::from_millis(10), processor);
 //!     let job_result_one = batcher.send_item(1, None).await;
 //!     let job_result_two = batcher.send_item(2, None).await;
 //!     assert_eq!(job_result_one.await, Ok(Ok(3)));
