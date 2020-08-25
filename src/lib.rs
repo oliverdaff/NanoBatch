@@ -124,6 +124,8 @@ pub struct NanoBatcher<T, S, E> {
     shutdown_notifier: Arc<Notify>,
     // True if the NanoBatcher is not receiving new BatchItems
     closed: bool,
+
+    is_shutdown: tokio::sync::Mutex<bool>
 }
 
 /// The BatchProcessor is a trait that must be implemented for each
@@ -217,6 +219,7 @@ impl<T: 'static + Send + Debug, S: 'static + Send + Debug, E: 'static + Send + C
             closed_notifier,
             shutdown_notifier,
             closed: false,
+            is_shutdown: tokio::sync::Mutex::new(false),
         }
     }
 
@@ -265,9 +268,13 @@ impl<T: 'static + Send + Debug, S: 'static + Send + Debug, E: 'static + Send + C
     /// until the previously accepted BatchItems are processed.  After calling
     /// this method futher calls to `send_item` wil return imeidiately `Err`.
     pub async fn shutdown(&mut self) {
-        self.closed_notifier.notify();
-        self.closed = true;
-        self.shutdown_notifier.notified().await
+        let mut is_shut_down = self.is_shutdown.lock().await;
+        if !*is_shut_down {
+            self.closed_notifier.notify();
+            self.closed = true;
+            self.shutdown_notifier.notified().await;
+            *is_shut_down = true;
+        }
     }
 
     /// Returns a `mpl Future<Output = NanoBatchResult<Result<S, E>, T>> + '_`
