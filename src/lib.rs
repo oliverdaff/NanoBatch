@@ -125,7 +125,7 @@ pub struct NanoBatcher<T, S, E> {
     // True if the NanoBatcher is not receiving new BatchItems
     closed: bool,
 
-    is_shutdown: tokio::sync::Mutex<bool>
+    is_shutdown: tokio::sync::Mutex<bool>,
 }
 
 /// The BatchProcessor is a trait that must be implemented for each
