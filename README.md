@@ -1,4 +1,4 @@
-# NanoBatcher
+# NanoBatch [![CircleCI](https://circleci.com/gh/oliverdaff/NanoBatch.svg?style=shield)](https://circleci.com/gh/oliverdaff/NanoBatch)
 __A micro batching library written in Rust.__
 
 Micro-batching is a technique used in processing pipelines where individual tasks are grouped together into small batches. This can improve throughput by reducing the number of requests made to a downstream system. Nano is a micro-batching library.
