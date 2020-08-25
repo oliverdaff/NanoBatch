@@ -47,8 +47,8 @@
 //! The configuration options are:
 //!  *   `max_batch_size` - the largest allowed batch size, before the batch is sent to the `BatchProcessor`.
 //!  *   `max_pending_messages` - the largest allowed pending messages before `send_item` waits for capacity.
-//!  *   `max_time_between_batchs - the maximum time until the submitted items will be
-//!  send, even if the `max_batch_size` has note been reached.
+//!  *   `max_time_between_batches` - the maximum time until the submitted items will be
+//!  send, even if the `max_batch_size` has not been reached.
 //!  
 //! Backpressure can be achieved on the sender by setting `max_pending_messages` which sets the allowed number of pending
 //! messages in the input channel.
